@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+    confluence:
+        restart: always
+        image: shu300/confluence
+        ports:
+            - 9096:8090
+            - 8091:8091
+        environment:
+            - "X_PROXY_NAME=confluence.kooshop.net"
+            - "X_PROXY_PORT=443"
+            - "X_PROXY_SCHEME=https"
+        volumes:
+            - "./home:/var/atlassian/confluence"

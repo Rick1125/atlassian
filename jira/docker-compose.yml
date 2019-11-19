@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    jira:
+        restart: always
+        image: cptactionhank/atlassian-jira-software:latest
+        user: root:root
+        ports:
+            - 9095:8080
+        environment:
+            - "CATALINA_OPTS=-javaagent:/opt/agent/atlassian-agent.jar"
+            - "X_PROXY_NAME=jira.kooshop.net"
+            - "X_PROXY_PORT=443"
+            - "X_PROXY_SCHEME=https"
+        volumes:
+            - "agent:/opt/agent:ro"
+            - "./home:/var/atlassian/jira"
+            - "./logs:/opt/atlassian/jira/logs"
+            - "./mysql-connector-java-5.1.48-bin.jar:/opt/atlassian/jira/lib/mysql-connector-java-5.1.48-bin.jar"
+volumes:
+    agent:
+        external: true

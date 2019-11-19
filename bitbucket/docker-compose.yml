@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+    bitbucket:
+        #restart: always
+        image: atlassian/bitbucket-server
+        user: root:root
+        ports:
+            - 7990:7990
+        environment:
+            - "JAVA_OPTS=-javaagent:/opt/agent/atlassian-agent.jar"
+            - "SERVER_PROXY_NAME=git.kooshop.net"
+            - "SERVER_PROXY_PORT=443"
+            - "SERVER_SCHEME=https"
+            - "SERVER_SECURE=true"
+        #volumes:
+            #- "agent:/opt/agent:ro"
+            #- "./home:/var/atlassian/bitbucket"
+            #- "./logs:/opt/atlassian/bitbucket/logs"
+            #- "./mysql-connector-java-5.1.48-bin.jar:/opt/atlassian/bitbucket/lib/mysql-connector-java-5.1.48-bin.jar"
+volumes:
+    agent:
+        external: true

@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+    crowd:
+        restart: always
+        image: dchevell/crowd
+        user: root:root
+        ports:
+            - 8095:8095
+        volumes:
+            - "agent:/opt/agent:ro"
+            - "./data:/var/atlassian/application-data/crowd"
+            - "./mysql-connector-java-5.1.48-bin.jar:/opt/atlassian/crowd/apache-tomcat/lib/mysql-connector-java-5.1.48-bin.jar"
+        environment:
+            - "JAVA_OPTS=-javaagent:/opt/agent/atlassian-agent.jar"
+            - "CATALINA_CONNECTOR_PROXYNAME=sso.kooshop.net"
+            - "CATALINA_CONNECTOR_PROXYPORT=443"
+            - "CATALINA_CONNECTOR_SCHEME=https"
+            - "CATALINA_CONNECTOR_SECURE=true"
+volumes:
+    agent:
+        external: true

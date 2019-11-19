@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+    bamboo:
+        image: cptactionhank/atlassian-bamboo
+        user: root:root
+        ports:
+            - 8085:8085
+            - 54663:54663
+        volumes:
+            - "agent:/opt/agent"
+            - "./data:/var/atlassian/bamboo"
+
+        environment:
+            - "JAVA_OPTS=-javaagent:/opt/agent/atlassian-agent.jar"
+            - "X_PROXY_NAME=bamboo.kooshop.net"
+            - "X_PROXY_PORT=443"
+            - "X_PROXY_SCHEME=https"
+            - "TZ=Asia/Shanghai"
+volumes:
+    agent:
+        external: true
